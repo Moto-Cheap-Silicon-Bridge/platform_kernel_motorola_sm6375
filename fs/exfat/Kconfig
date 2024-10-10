@@ -1,5 +1,3 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-
 config EXFAT_FS
 	tristate "exFAT fs support"
 	select NLS

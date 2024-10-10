@@ -400,7 +400,7 @@ out:
 	return ret;
 }
 
-int ili_tddi_ic_sram_test(void)
+int ili_tddi_ic_sram_test()
 {
 	int ret = 0;
 

@@ -212,24 +212,15 @@ static inline void update_poison_center(struct touch_event_data *tev)
 static int ts_mmi_gesture_handler(struct gesture_event_data *gev)
 {
 	int key_code;
+	bool need2report = true;
 	struct ts_mmi_dev *touch_cdev = sensor_pdata->touch_cdev;
-	unsigned char mode_type = touch_cdev->gesture_mode_type;
 
 	switch (gev->evcode) {
 	case 1:
-		if (!(mode_type & TS_MMI_GESTURE_SINGLE))
-			return 1;
-
 		key_code = BTN_TRIGGER_HAPPY3;
 		pr_info("%s: single tap\n", __func__);
 			break;
 	case 2:
-		if (!(mode_type & TS_MMI_GESTURE_ZERO))
-			return 1;
-
-		touch_cdev->udfps_pressed = true;
-		sysfs_notify(&DEV_MMI->kobj, NULL, "udfps_pressed");
-
 		key_code = BTN_TRIGGER_HAPPY4;
 		if(gev->evdata.x == 0)
 			gev->evdata.x = touch_cdev->pdata.fod_x ;
@@ -240,25 +231,20 @@ static int ts_mmi_gesture_handler(struct gesture_event_data *gev)
 		pr_info("%s: zero tap; x=%x, y=%x\n", __func__, gev->evdata.x, gev->evdata.y);
 		break;
 	case 3:
-		if (!(mode_type & TS_MMI_GESTURE_ZERO))
-			return 1;
-
 		key_code = BTN_TRIGGER_HAPPY5;
 		pr_info("%s: zero tap up\n", __func__);
 		break;
 	case 4:
-		if (!(mode_type & TS_MMI_GESTURE_DOUBLE))
-			return 1;
-
 		key_code = BTN_TRIGGER_HAPPY6;
 		pr_info("%s: double tap\n", __func__);
-		touch_cdev->double_tap_pressed = true;
-		sysfs_notify(&DEV_MMI->kobj, NULL, "double_tap_pressed");
 		break;
 	default:
+		need2report = false;
 		pr_info("%s: unknown id=%x\n", __func__, gev->evcode);
-		return 1;
 	}
+
+	if (!need2report)
+		return 1;
 
 	input_report_key(sensor_pdata->input_sensor_dev, key_code, 1);
 	input_sync(sensor_pdata->input_sensor_dev);

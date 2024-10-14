@@ -8,4 +8,4 @@ ifneq ($(filter m y,$(CONFIG_DYNAMIC_UPDATE_UI_FULL)),)
 endif
 
 cw2217b_fg_mmi-objs += cw2217B_fuel_gauge_base.o
-obj-m += cw2217b_fg_mmi.o
+obj-$(CONFIG_CW2217B_FG) += cw2217b_fg_mmi.o

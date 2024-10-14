@@ -16,7 +16,7 @@
 #include <linux/iio/consumer.h>
 #include <linux/iio/iio.h>
 #include <linux/extcon-provider.h>
-#include "mmi_charger.h"
+#include "../mmi_charger/mmi_charger.h"
 #include <linux/mmi_discrete_power_supply.h>
 #include <linux/usb/adapter_class.h>
 

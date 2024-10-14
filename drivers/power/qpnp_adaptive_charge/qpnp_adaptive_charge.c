@@ -40,6 +40,7 @@
 #include <linux/moduleparam.h>
 
 #ifdef USE_MMI_CHARGER
+#include "mmi_charger.h"
 #elif (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 61))
 #define vote(votable, client_str, enabled, val) \
 	mmi_vote(votable, client_str, enabled, val)

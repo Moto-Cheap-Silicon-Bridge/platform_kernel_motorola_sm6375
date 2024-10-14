@@ -40,6 +40,8 @@
 #include <linux/qti_power_supply.h>
 #endif
 
+#include "mmi_charger.h"
+
 static bool debug_enabled;
 module_param(debug_enabled, bool, 0600);
 MODULE_PARM_DESC(debug_enabled, "Enable debug for MMI DISCRETE CHARGER driver");
